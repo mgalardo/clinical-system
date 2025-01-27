@@ -70,6 +70,7 @@ module.exports = {
     'arrow-parens': 'off',
     'one-var': 'off',
     'no-void': 'off',
+    'vue/multi-word-component-names': 'off',
     'multiline-ternary': 'off',
 
     'import/first': 'off',
