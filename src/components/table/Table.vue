@@ -19,10 +19,10 @@
                 </q-td>
                 <q-td v-for="column in columns" :key="column.name" :props="props">
                     <div v-if="column.name === 'actions'">
-                        <q-btn @click="column.edit_action(props.row)" class="default-table__edit-btn" unelevated icon="edit" dense></q-btn>
+                        <q-btn title="Editar" @click="column.edit_action(props.row)" class="default-table__edit-btn" unelevated icon="edit" dense></q-btn>
                     </div>
                     <div v-else-if="column.name === 'actions_custom'" style="display: flex; gap: 5px;">
-                        <q-btn v-for="(action, index) of column.actions" :key="index" class="default-table__edit-btn" @click="action.execute(props.row)" unelevated :icon="action.icon" dense></q-btn>
+                        <q-btn :title="action.title" v-for="(action, index) of column.actions" :key="index" class="default-table__edit-btn" @click="action.execute(props.row)" unelevated :icon="action.icon" dense></q-btn>
                     </div>
                     <div v-else>
                         <div v-html="props.row[column.field]"></div>
