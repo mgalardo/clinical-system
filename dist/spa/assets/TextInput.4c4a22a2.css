@@ -1,0 +1,1 @@
+.text-input--required{position:relative}.text-input--required:before{content:"*";position:absolute;right:5px;color:#c10015;font-weight:600}

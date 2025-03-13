@@ -1,0 +1,1 @@
+.default-label{font-size:18px;font-weight:600;margin-bottom:8px}.default-label--required{position:relative;width:fit-content}.default-label--required:before{content:"*";position:absolute;color:#c10015;right:-15px;top:-3px}

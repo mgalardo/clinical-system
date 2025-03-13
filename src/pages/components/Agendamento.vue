@@ -74,7 +74,6 @@ const getHourNowPosition = computed(() => {
   const minutos = agora.getMinutes()
   const hora = ((horaAtual + minutos / 60) / 23) * 100
 
-  console.log(horaAtual, hora)
   return {
     top: hora + '%'
   }
