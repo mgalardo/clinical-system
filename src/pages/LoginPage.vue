@@ -9,11 +9,12 @@
     </div>
     <div class="login-page__right">
       <div class="login-page__container default__box-shadow default__border-radius">
-        <Form class="login-page__form">
+        <Form @submit="doLogin" class="login-page__form">
           <div class="login-page__message">Faça seu Login</div>
           <TextInput required type="email" v-model="loginPayload.email" :dense="true" label="Email"></TextInput>
           <TextInput required type="password" v-model="loginPayload.password" :dense="true" label="Senha"></TextInput>
-          <Button type="submit" label="Entrar" color="primary"></Button>
+          <Button :loading="loading" type="submit" label="Entrar" color="primary"></Button>
+          <div class="login-page__error" v-if="error">Email ou senha incorretos.</div>
         </Form>
       </div>
     </div>
@@ -24,6 +25,7 @@
 import TextInput from 'src/components/forms/TextInput.vue'
 import Button from 'src/components/forms/Button.vue'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 defineOptions({
   name: 'LoginPage'
@@ -33,6 +35,28 @@ const loginPayload = ref({
   email: '',
   password: ''
 })
+
+const loading = ref(false)
+const error = ref(false)
+
+const router = useRouter()
+
+function doLogin (e) {
+  e.preventDefault()
+  loading.value = true
+  error.value = false
+  if (loginPayload.value.email === 'emailteste@gmail.com' && loginPayload.value.password === '123') {
+    setTimeout(() => {
+      loading.value = false
+      router.push('/')
+    }, 2000)
+  } else {
+    setTimeout(() => {
+      loading.value = false
+      error.value = true
+    }, 2000)
+  }
+}
 </script>
 
 <style lang="sass">
@@ -70,4 +94,9 @@ const loginPayload = ref({
     .button
       width: 100%
       margin-top: 40px
+  &__error
+    color: $negative
+    font-weight: 500
+    font-size: 13px
+    text-align: center
 </style>

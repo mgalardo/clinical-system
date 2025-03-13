@@ -1,6 +1,6 @@
 <template>
   <q-form @submit="submit">
-      <slot></slot>
+    <slot></slot>
   </q-form>
 </template>
 

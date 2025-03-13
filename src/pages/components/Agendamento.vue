@@ -40,7 +40,7 @@ defineOptions({
 })
 
 interface Props {
-    data: object[]
+    data: any
 }
 
 const props = defineProps<Props>()

@@ -5,35 +5,36 @@
                 <q-th v-if="expanded">
                     <span>Detalhes</span>
                 </q-th>
-                <q-th
-                    v-for="col in props.cols"
-                    :style="col.width ? `width:${col.width}%` : '' "
-                    :key="col.name"
+                <q-th v-for="col in props.cols" :style="col.width ? `width:${col.width}%` : ''" :key="col.name"
                     :props="props">
                     <span v-html="col.label"></span>
                 </q-th>
             </q-tr>
         </template>
         <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td auto-width class="text-center" v-if="expanded">
-                <q-btn size="sm" color="primary" flat dense unelevated @click="props.row.expand = !props.row.expand" :icon="props.row.expand ? 'arrow_drop_up' : 'arrow_drop_down'" />
-            </q-td>
-            <q-td v-for="column in columns" :key="column.name" :props="props">
-                <div v-if="column.name === 'actions'">
-                    <q-btn class="default-table__edit-btn" unelevated icon="edit" dense></q-btn>
-                </div>
-                <div v-else>
-                    <div v-html="props.row[column.field]"></div>
-                </div>
-            </q-td>
-          </q-tr>
+            <q-tr :props="props">
+                <q-td auto-width class="text-center" v-if="expanded">
+                    <q-btn size="sm" color="primary" flat dense unelevated @click="props.row.expand = !props.row.expand"
+                        :icon="props.row.expand ? 'arrow_drop_up' : 'arrow_drop_down'" />
+                </q-td>
+                <q-td v-for="column in columns" :key="column.name" :props="props">
+                    <div v-if="column.name === 'actions'">
+                        <q-btn @click="column.edit_action(props.row)" class="default-table__edit-btn" unelevated icon="edit" dense></q-btn>
+                    </div>
+                    <div v-else-if="column.name === 'actions_custom'" style="display: flex; gap: 5px;">
+                        <q-btn v-for="(action, index) of column.actions" :key="index" class="default-table__edit-btn" @click="action.execute(props.row)" unelevated :icon="action.icon" dense></q-btn>
+                    </div>
+                    <div v-else>
+                        <div v-html="props.row[column.field]"></div>
+                    </div>
+                </q-td>
+            </q-tr>
 
-          <q-tr v-if="props.row.expand" :props="props">
-            <q-td colspan="100%">
-                <div class="text-left" v-html="props.row['expansion_content']"></div>
-            </q-td>
-        </q-tr>
+            <q-tr v-if="props.row.expand" :props="props">
+                <q-td colspan="100%">
+                    <div class="text-left" v-html="props.row['expansion_content']"></div>
+                </q-td>
+            </q-tr>
         </template>
     </q-table>
 </template>
@@ -41,7 +42,7 @@
 <script setup lang="ts">
 
 interface Props {
-    columns: object[]
+    columns: any
     rows: object[]
     expanded?: boolean
 }

@@ -6,10 +6,10 @@
         <q-toolbar-title>
           <q-btn-dropdown menu-self="top end" content-class="main-layout__user-info" flat unelevated no-caps>
             <template v-slot:label>
-                Olá, Matheus Alexander
-                <q-avatar>
-                  <img src="https://cdn.quasar.dev/img/avatar1.jpg">
-                </q-avatar>
+              Olá, Matheus Alexander
+              <q-avatar>
+                <img src="https://cdn.quasar.dev/img/avatar1.jpg">
+              </q-avatar>
             </template>
             <q-btn no-caps class="main-layout__exit-btn" unelevated flat icon="logout" label="Sair"></q-btn>
           </q-btn-dropdown>
@@ -17,16 +17,18 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer class="default__box-shadow" :mini="isMini" show-if-above v-model="leftDrawerOpen" side="left" behavior="desktop">
-      <div class="main-layout__images" :class="{'main-layout__images--minimized': isMini}">
-        <q-img :width="isMini ? '' : '100px'" src="brincaris.png"></q-img>
-        <q-img :width="isMini ? '' : '100px'" src="ilumiare.png"></q-img>
+    <q-drawer class="default__box-shadow" :mini="isMini" show-if-above v-model="leftDrawerOpen" side="left"
+      behavior="desktop">
+      <div class="main-layout__images" :class="{ 'main-layout__images--minimized': isMini }">
+        <q-img :width="isMini ? '' : '100px'" src="/brincaris.png"></q-img>
+        <q-img :width="isMini ? '' : '100px'" src="/ilumiare.png"></q-img>
         <q-btn dense flat round :icon="isMini ? 'arrow_right' : 'arrow_left'" @click="toggleMiniDrawer" />
       </div>
       <q-separator></q-separator>
       <q-scroll-area class="fit">
         <q-list padding>
-          <q-item to="/" :active="route.path === '/'" active-class="main-layout__list-item--active" class="default__border-radius main-layout__list-item" clickable v-ripple>
+          <q-item to="/" :active="route.path === '/'" active-class="main-layout__list-item--active"
+            class="default__border-radius main-layout__list-item" clickable v-ripple>
             <q-item-section avatar>
               <q-icon name="home" />
             </q-item-section>
@@ -36,7 +38,8 @@
             </q-item-section>
           </q-item>
 
-          <q-item to="/empresas" :active="route.path === '/empresas'" active-class="main-layout__list-item--active" class="default__border-radius main-layout__list-item" clickable v-ripple>
+          <q-item to="/empresas" :active="route.path === '/empresas'" active-class="main-layout__list-item--active"
+            class="default__border-radius main-layout__list-item" clickable v-ripple>
             <q-item-section avatar>
               <q-icon name="store" />
             </q-item-section>
@@ -46,7 +49,9 @@
             </q-item-section>
           </q-item>
 
-          <q-item to="/especialidades" :active="route.path === '/especialidades'" active-class="main-layout__list-item--active" class="default__border-radius main-layout__list-item" clickable v-ripple>
+          <q-item to="/especialidades" :active="route.path === '/especialidades'"
+            active-class="main-layout__list-item--active" class="default__border-radius main-layout__list-item"
+            clickable v-ripple>
             <q-item-section avatar>
               <q-icon name="construction" />
             </q-item-section>
@@ -56,7 +61,9 @@
             </q-item-section>
           </q-item>
 
-          <q-item to="/profissionais" :active="route.path === '/profissionais'" active-class="main-layout__list-item--active" class="default__border-radius main-layout__list-item" clickable v-ripple>
+          <q-item to="/profissionais" :active="route.path === '/profissionais'"
+            active-class="main-layout__list-item--active" class="default__border-radius main-layout__list-item"
+            clickable v-ripple>
             <q-item-section avatar>
               <q-icon name="engineering" />
             </q-item-section>
@@ -66,17 +73,30 @@
             </q-item-section>
           </q-item>
 
-          <q-item to="/pacientes" :active="route.path === '/pacientes'" active-class="main-layout__list-item--active" class="default__border-radius main-layout__list-item" clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="group" />
-            </q-item-section>
+          <q-expansion-item label="Pacientes" icon="group" class="default__border-radius main-layout__list-item">
+            <q-list>
+              <q-item to="/pacientes/ativos" :active="route.path === '/pacientes/ativos'"
+                active-class="main-layout__list-item--active" class="default__border-radius main-layout__list-item"
+                clickable v-ripple>
+                <q-item-section>
+                  Ativos
+                </q-item-section>
+              </q-item>
+              <q-item to="/pacientes/interessados" :active="route.path === '/pacientes/interessados'"
+                active-class="main-layout__list-item--active" class="default__border-radius main-layout__list-item"
+                clickable v-ripple>
+                <q-item-section style="align-items: flex-start; align-content: baseline; gap: 10px">
+                  <div style="position: relative;">
+                    Solicitações <q-badge rounded>2</q-badge>
+                  </div>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-expansion-item>
 
-            <q-item-section>
-              Pacientes
-            </q-item-section>
-          </q-item>
-
-          <q-item to="/agendamentos" :active="route.path === '/agendamentos'" active-class="main-layout__list-item--active" class="default__border-radius main-layout__list-item" clickable v-ripple>
+          <q-item to="/agendamentos" :active="route.path === '/agendamentos'"
+            active-class="main-layout__list-item--active" class="default__border-radius main-layout__list-item"
+            clickable v-ripple>
             <q-item-section avatar>
               <q-icon name="event_note" />
             </q-item-section>
@@ -129,10 +149,25 @@ function toggleMiniDrawer () {
       font-size: 16px
       .q-avatar
         margin-left: 15px
+  .q-expansion-item
+    height: auto !important
+    .q-list
+      margin-left: 30px
   &__list-item
     height: 40px
     min-height: 40px
     margin-bottom: 4px
+    .q-badge
+      width: fit-content
+      font-size: 13px
+      right: -24px
+    .q-expansion-item__container
+      > div
+        &:first-child
+          border-radius: 10px
+          height: 40px
+          min-height: 40px
+          margin-bottom: 4px
     .q-item__section--side
       min-width: 30px
     &--active
