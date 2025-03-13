@@ -1,0 +1,1 @@
+import{G as l,J as c,K as a,f as s}from"./index.7d13efe2.js";const _=l({__name:"Button",props:{label:{},color:{},type:{},icon:{}},emits:["click"],setup(i,{emit:e}){const n=e;function t(){n("click")}return(o,p)=>(c(),a(s,{onClick:t,class:"button",icon:o.icon,"no-caps":"",type:o.type,color:o.color,label:o.label},null,8,["icon","type","color","label"]))}});export{_};

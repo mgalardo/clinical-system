@@ -89,11 +89,43 @@ const categorias = ref([
       { label: 'Compreende as relações temporais' }
     ]
   },
-  { titulo: 'Comunicação Expressiva', itens: [] },
-  { titulo: 'Competências Sociais Adultos ou Pares', itens: [] },
-  { titulo: 'Cognição', itens: [] },
-  { titulo: 'Jogo', itens: [] },
-  { titulo: 'Competências Sociais', itens: [] }
+  {
+    titulo: 'Comunicação Expressiva',
+    itens: [
+      { label: 'Produz enunciados de duas ou mais palavras para fazer comentários a outra pessoa.' },
+      { label: 'Transmite uma mensagem simples a outra pessoa ("Vai dizer "Olá" à mamãe")' },
+      { label: 'Faz perguntas simples de "Sim/Não" usando uma entoação ascendente (pode ser um enunciado de uma palavra com uma entoação ascendente)' },
+      { label: 'Responde questões complexas ("Quem?", "Como?")' },
+      { label: 'Usa palavras para descrever estados físicos' }
+    ]
+  },
+  {
+    titulo: 'Competências Sociais Adultos ou Pares',
+    itens: [
+      { label: 'Joga jogos simples de motricidade grossa (por exemplo, bola, escondidas, rodas de canções)' },
+      { label: 'Partilha e mostra objetos quando o par pede.' }
+    ]
+  },
+  {
+    titulo: 'Cognição',
+    itens: [
+      { label: 'Categoriza objetos/imagens em oito classes.' }
+    ]
+  },
+  {
+    titulo: 'Jogo',
+    itens: [
+      { label: 'Organiza adereços para o tema.' },
+      { label: 'Usa objetos substitutos para simbolizar os adereços do jogo' },
+      { label: 'Liga espontaneamente três ou mais comportamentos relacionados num tema de jogo' }
+    ]
+  },
+  {
+    titulo: 'Competências Sociais',
+    itens: [
+      { label: 'Convida os pares para brincar' }
+    ]
+  }
 ])
 
 </script>
