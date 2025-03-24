@@ -38,7 +38,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item to="/empresas" :active="route.path === '/empresas'" active-class="main-layout__list-item--active"
+          <q-item v-if="!isProfissional" to="/empresas" :active="route.path === '/empresas'" active-class="main-layout__list-item--active"
             class="default__border-radius main-layout__list-item" clickable v-ripple>
             <q-item-section avatar>
               <q-icon name="store" />
@@ -49,7 +49,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item to="/especialidades" :active="route.path === '/especialidades'"
+          <q-item v-if="!isProfissional" to="/especialidades" :active="route.path === '/especialidades'"
             active-class="main-layout__list-item--active" class="default__border-radius main-layout__list-item"
             clickable v-ripple>
             <q-item-section avatar>
@@ -61,7 +61,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item to="/profissionais" :active="route.path === '/profissionais'"
+          <q-item v-if="!isProfissional" to="/profissionais" :active="route.path === '/profissionais'"
             active-class="main-layout__list-item--active" class="default__border-radius main-layout__list-item"
             clickable v-ripple>
             <q-item-section avatar>
@@ -82,7 +82,7 @@
                   Ativos
                 </q-item-section>
               </q-item>
-              <q-item to="/pacientes/interessados" :active="route.path === '/pacientes/interessados'"
+              <q-item v-if="!isProfissional" to="/pacientes/interessados" :active="route.path === '/pacientes/interessados'"
                 active-class="main-layout__list-item--active" class="default__border-radius main-layout__list-item"
                 clickable v-ripple>
                 <q-item-section style="align-items: flex-start; align-content: baseline; gap: 10px">
@@ -117,7 +117,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 defineOptions({
@@ -129,6 +129,10 @@ const isMini = ref(false)
 function toggleMiniDrawer () {
   isMini.value = !isMini.value
 }
+
+const isProfissional = computed(() => {
+  return route.query.profissional
+})
 </script>
 
 <style lang="sass">

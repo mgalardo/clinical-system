@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <PageTitle :add-button="true" add-button-label="Adicionar profissional">Lista de Profissionais</PageTitle>
+    <PageTitle @click="addProfissional" :add-button="true" add-button-label="Adicionar profissional">Lista de Profissionais</PageTitle>
     <section class="default__box-shadow">
       <Table :expanded="true" :rows="rows" :columns="columns"></Table>
     </section>
@@ -8,10 +8,12 @@
 </template>
 
 <script setup lang="ts">
+import { useQuasar } from 'quasar'
 import PageTitle from 'src/components/headers/PageTitle.vue'
 import Table from 'src/components/table/Table.vue'
 
 import { ref } from 'vue'
+import AddEditProfissionalDialog from './components/AddEditProfissionalDialog.vue'
 
 defineOptions({
   name: 'Profissionais'
@@ -49,6 +51,13 @@ const rows = ref([
     expansion_content: 'Conteudo sobre a Aline'
   }
 ])
+
+const $q = useQuasar()
+function addProfissional () {
+  $q.dialog({
+    component: AddEditProfissionalDialog
+  })
+}
 </script>
 
 <style lang="sass">

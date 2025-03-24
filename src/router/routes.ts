@@ -11,6 +11,7 @@ const routes: RouteRecordRaw[] = [
       { path: '/pacientes/ativos', component: () => import('pages/pacientes/PacientesAtivos.vue') },
       { path: '/pacientes/interessados', component: () => import('pages/pacientes/PacientesInteressados.vue') },
       { path: '/agendamentos', component: () => import('pages/Agenda.vue') },
+      { path: '/agendamentos/9172', component: () => import('pages/Atendimento.vue') },
       { path: '/profissionais', component: () => import('pages/Profissionais.vue') }
     ]
   },

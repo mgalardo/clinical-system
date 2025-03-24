@@ -7,18 +7,23 @@
             v-model="date"
             :locale="locale"
             :events="events"
-            event-color="primary"
-            />
+            event-color="primary" />
         </div>
         <div class="agendamento__container">
             <q-scroll-area class="fit">
                 <div class="agendamento__hours">
-                    <div class="agendamento__hour" v-for="hour of 24" :key="hour">{{hour - 1}}h</div>
+                    <div class="agendamento__hour" :hour="hour" v-for="hour of 24" :key="hour">{{hour - 1}}h</div>
                     <div class="agendamento__hour-now" :style="getHourNowPosition"><div>{{ hourNow }}</div></div>
+                    <div v-show="agendamento.dia === date.replaceAll('/', '-')" v-for="agendamento of data" :key="agendamento" class="agendamento__compromisso" :style="getCompromissoStyle(agendamento)">
+                      {{ agendamento.nome_paciente }}
+                      <q-menu v-if="isProfissional">
+                        <q-btn @click="startAtendimento" color="primary" square label="Começar atendimento"></q-btn>
+                      </q-menu>
+                    </div>
                 </div>
                 <div class="agendamento__profissionais fit">
                     <div class="agendamento__profissional" v-for="(profissional, index) of groupedByProfessional" :key="index">
-                        <div class="agendamento__profissional-header">
+                        <div class="agendamento__profissional-header" :profissional="index">
                             {{ index }}
                             <q-tooltip>
                                 {{ index }}
@@ -33,7 +38,9 @@
 
 <script lang="ts" setup>
 import { getNowDate, getLocale, getFormattedHour } from 'src/utils/DateUtils'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { scroll } from 'quasar'
+import { useRoute, useRouter } from 'vue-router'
 
 defineOptions({
   name: 'Agendamento'
@@ -79,10 +86,46 @@ const getHourNowPosition = computed(() => {
   }
 })
 
+const { getScrollTarget, setVerticalScrollPosition } = scroll
+
+// Get parent DomNode that handles page scrolling
+// Usually this is element with classname ".layout-view" or "window"
+onMounted(() => {
+  const elementToScroll = document.querySelector('.agendamento__hour-now')
+  const scrollElement = getScrollTarget(elementToScroll)
+  setVerticalScrollPosition(scrollElement, elementToScroll.getBoundingClientRect().top - 300, 0)
+})
+
+function getCompromissoStyle (agendamento) {
+  const profissionalHeader = document.querySelector(`[profissional="${agendamento.profissional}"]`) as HTMLElement
+  const hour = document.querySelector(`[hour="${agendamento.hora_inicial.split(':')[0]}"]`) as HTMLElement
+  if (!profissionalHeader || !hour) {
+    return
+  }
+  const left = profissionalHeader.offsetLeft + 0
+
+  const top = hour.offsetTop + 100
+  return {
+    left: left + 'px',
+    top: top + 'px'
+  }
+}
+
+const route = useRoute()
+const isProfissional = computed(() => {
+  return route.query.profissional
+})
+
+const router = useRouter()
+function startAtendimento () {
+  router.push('/agendamentos/9172?profissional=true')
+}
+
 </script>
 
 <style lang="sass">
 .agendamento
+    user-select: none
     display: flex
     gap: 20px
     .q-scrollarea__content
@@ -126,9 +169,11 @@ const getHourNowPosition = computed(() => {
     &__profissionais
         display: flex
         gap: 10px
-        height: 100%
+        height: 30px !important
+        background: #fff
         border-bottom: 1px solid $light-gray
         overflow: hidden
+        position: fixed
     &__profissional-header
         font-size: 16px
         font-weight: 600
@@ -139,4 +184,19 @@ const getHourNowPosition = computed(() => {
         overflow: hidden
         text-overflow: ellipsis
         text-wrap-mode: nowrap
+    &__compromisso
+      height: 60px
+      background: #cdcdcd
+      color: #000
+      display: flex
+      align-items: center
+      padding: 10px
+      border-radius: 5px
+      position: absolute
+      opacity: 1
+      transition: 0.3s opacity
+      cursor: pointer
+      &:hover
+        opacity: 0.7
+        transition: 0.3s opacity
 </style>
