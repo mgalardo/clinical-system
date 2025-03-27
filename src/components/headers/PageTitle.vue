@@ -1,7 +1,7 @@
 <template>
   <div class="page-title">
     <h1><slot></slot></h1>
-    <Button v-on:click="onClick" unelevated color="primary" v-if="addButton" icon="add" :label="addButtonLabel"></Button>
+    <Button v-on:click="onClick" unelevated color="primary" v-if="addButton" :icon="addIcon ? addIcon : 'add'" :label="addButtonLabel"></Button>
   </div>
 </template>
 
@@ -9,7 +9,8 @@
 import Button from '../forms/Button.vue'
 
 interface Props {
-    addButton?: boolean
+  addButton?: boolean
+  addIcon?: string
   addButtonLabel?: string
 }
 
@@ -35,4 +36,14 @@ function onClick () {
     .q-btn
         max-height: 40px
         margin-top: 6px
+        @media (max-width: 650px)
+          border-radius: 50%
+          width: 50px
+          max-height: 50px
+          .q-icon
+            margin-right: 0px
+          .block
+            display: none !important
+            height: 0px
+            width: 0px
 </style>

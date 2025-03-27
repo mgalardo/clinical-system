@@ -61,6 +61,8 @@ function doLogin (e) {
 
 <style lang="sass">
 .login-page
+  @media (max-width: 650px)
+    flex-direction: column
   &__left
     flex: 1
     max-width: 50%
@@ -71,6 +73,9 @@ function doLogin (e) {
     padding: 0px 80px
     > .q-img
       margin-top: -50px
+    @media (max-width: 650px)
+      display: none
+      width: 0px !important
   &__right
     max-width: 50%
     flex: 1
@@ -80,6 +85,9 @@ function doLogin (e) {
     align-items: center
     justify-content: center
     padding: 0px 50px
+    @media (max-width: 650px)
+      max-width: 100%
+      width: 100%
   &__container
     background: #fff
     padding: 30px

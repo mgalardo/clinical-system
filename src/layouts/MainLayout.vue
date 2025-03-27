@@ -4,6 +4,7 @@
     <q-header class="main-layout__header">
       <q-toolbar>
         <q-toolbar-title>
+          <q-btn icon="menu" v-if="isMobile" flat @click="leftDrawerOpen = true"></q-btn>
           <q-btn-dropdown menu-self="top end" content-class="main-layout__user-info" flat unelevated no-caps>
             <template v-slot:label>
               Olá, Matheus Alexander
@@ -18,7 +19,7 @@
     </q-header>
 
     <q-drawer class="default__box-shadow" :mini="isMini" show-if-above v-model="leftDrawerOpen" side="left"
-      behavior="desktop">
+      :behavior="isMobile ? 'mobile' : 'desktop'">
       <div class="main-layout__images" :class="{ 'main-layout__images--minimized': isMini }">
         <q-img :width="isMini ? '' : '100px'" src="/brincaris.png"></q-img>
         <q-img :width="isMini ? '' : '100px'" src="/ilumiare.png"></q-img>
@@ -117,6 +118,7 @@
 </template>
 
 <script setup lang="ts">
+import { useQuasar } from 'quasar'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
@@ -126,7 +128,18 @@ defineOptions({
 
 const leftDrawerOpen = ref(true)
 const isMini = ref(false)
+const $q = useQuasar()
+const isMobile = computed(() => {
+  return $q.screen.width < 650
+})
+if (isMobile.value) {
+  leftDrawerOpen.value = false
+}
 function toggleMiniDrawer () {
+  if (isMobile.value) {
+    leftDrawerOpen.value = false
+    return
+  }
   isMini.value = !isMini.value
 }
 

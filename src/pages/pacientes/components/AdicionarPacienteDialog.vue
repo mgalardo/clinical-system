@@ -2,7 +2,7 @@
   <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card class="activate-client-dialog default__border-radius default__box-shadow">
       <q-card-section class="activate-client-dialog__title">
-        Ativar Cliente - {{ clientModel.nome }}
+        {{title}} <span v-if="client">- {{ clientModel.nome }}</span>
       </q-card-section>
       <q-card-section>
         <Form @submit="onOKClick" class="activate-client-dialog__form">
@@ -75,7 +75,8 @@ import Label from 'components/forms/Label.vue'
 import { ref } from 'vue'
 
 const props = defineProps({
-  client: Object
+  client: Object,
+  title: String
 })
 
 defineEmits([

@@ -75,7 +75,8 @@ function activateClient (client) {
   $q.dialog({
     component: AdicionarPacienteDialog,
     componentProps: {
-      client
+      client,
+      title: 'Ativar Paciente'
     }
   })
 }

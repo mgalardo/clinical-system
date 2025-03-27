@@ -19,6 +19,9 @@
             <TextInput required type="text" v-model="profissionalModel.profissao" label="Profissão" />
             <TextInput required type="text" mask="###.###.###-##" v-model="profissionalModel.cpf" label="CPF" />
           </section>
+          <section>
+            <SelectInput :options="[]" required v-model="profissionalModel.especialidade" label="Especialidade" />
+          </section>
         </Form>
       </q-card-section>
       <q-card-actions align="right">
@@ -34,6 +37,7 @@ import { useDialogPluginComponent } from 'quasar'
 import Form from 'components/forms/Form.vue'
 import TextInput from 'components/forms/TextInput.vue'
 import { ref } from 'vue'
+import SelectInput from 'src/components/forms/SelectInput.vue'
 
 const props = defineProps({
   profissional: Object

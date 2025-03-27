@@ -25,7 +25,8 @@ function addOrEditClient (client) {
   $q.dialog({
     component: AdicionarPacienteDialog,
     componentProps: {
-      client
+      client,
+      title: client ? 'Editar Cliente' : 'Adicionar Cliente'
     }
   })
 }

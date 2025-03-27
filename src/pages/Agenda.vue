@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <PageTitle @click="openAgendamento" :add-button="true" add-button-label="Adicionar agendamento">Agenda</PageTitle>
-    <section class="default__box-shadow">
+    <section class="default__box-shadow" style="height: 75dvh;">
       <Agendamento :data="isProfissional ? [data[2]] : data" />
     </section>
   </q-page>

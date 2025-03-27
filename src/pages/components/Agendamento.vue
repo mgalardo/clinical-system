@@ -12,13 +12,10 @@
         <div class="agendamento__container">
             <q-scroll-area class="fit">
                 <div class="agendamento__hours">
-                    <div class="agendamento__hour" :hour="hour" v-for="hour of 24" :key="hour">{{hour - 1}}h</div>
-                    <div class="agendamento__hour-now" :style="getHourNowPosition"><div>{{ hourNow }}</div></div>
-                    <div v-show="agendamento.dia === date.replaceAll('/', '-')" v-for="agendamento of data" :key="agendamento" class="agendamento__compromisso" :style="getCompromissoStyle(agendamento)">
+                    <div class="agendamento__hour" :hour="hour" v-for="hour of [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]" :key="hour">{{hour}}h</div>
+                    <div class="agendamento__hour-now" :key="hourNow" :style="getHourNowPosition"><div>{{ hourNow }}</div></div>
+                    <div @click="showAgendamento(agendamento)" v-show="agendamento.dia === date.replaceAll('/', '-')" v-for="agendamento of data" :key="agendamento" class="agendamento__compromisso" :style="getCompromissoStyle(agendamento)">
                       {{ agendamento.nome_paciente }}
-                      <q-menu v-if="isProfissional">
-                        <q-btn @click="startAtendimento" color="primary" square label="Começar atendimento"></q-btn>
-                      </q-menu>
                     </div>
                 </div>
                 <div class="agendamento__profissionais fit">
@@ -39,8 +36,8 @@
 <script lang="ts" setup>
 import { getNowDate, getLocale, getFormattedHour } from 'src/utils/DateUtils'
 import { computed, onMounted, ref } from 'vue'
-import { scroll } from 'quasar'
-import { useRoute, useRouter } from 'vue-router'
+import { scroll, useQuasar } from 'quasar'
+import AddEditAgendamentoDialog from './AddEditAgendamentoDialog.vue'
 
 defineOptions({
   name: 'Agendamento'
@@ -79,8 +76,7 @@ const getHourNowPosition = computed(() => {
   const agora = new Date()
   const horaAtual = agora.getHours()
   const minutos = agora.getMinutes()
-  const hora = ((horaAtual + minutos / 60) / 23) * 100
-
+  const hora = ((horaAtual + minutos / 60) / 24) * 100
   return {
     top: hora + '%'
   }
@@ -104,21 +100,21 @@ function getCompromissoStyle (agendamento) {
   }
   const left = profissionalHeader.offsetLeft + 0
 
-  const top = hour.offsetTop + 100
+  const top = hour.offsetTop + 20
   return {
     left: left + 'px',
     top: top + 'px'
   }
 }
 
-const route = useRoute()
-const isProfissional = computed(() => {
-  return route.query.profissional
-})
-
-const router = useRouter()
-function startAtendimento () {
-  router.push('/agendamentos/9172?profissional=true')
+const $q = useQuasar()
+function showAgendamento (agendamento) {
+  $q.dialog({
+    component: AddEditAgendamentoDialog,
+    componentProps: {
+      agendamento
+    }
+  })
 }
 
 </script>
@@ -128,9 +124,11 @@ function startAtendimento () {
     user-select: none
     display: flex
     gap: 20px
+    height: 100%
+    overflow: auto
     .q-scrollarea__content
         display: flex
-        gap: 15px
+        gap: 15pxd
         color: $dark
     &__container
         width: 100%
@@ -140,7 +138,7 @@ function startAtendimento () {
         color: $gray
         display: flex
         flex-direction: column
-        gap: 60px
+        gap: 40px
     &__hour
         position: relative
         font-size: 13px
@@ -185,7 +183,7 @@ function startAtendimento () {
         text-overflow: ellipsis
         text-wrap-mode: nowrap
     &__compromisso
-      height: 60px
+      height: 40px
       background: #cdcdcd
       color: #000
       display: flex
